@@ -4,7 +4,7 @@ function solution(left, right) {
     function divisorNum (number) {
         let count = 0;
         for (let i = 1; i <= number; i++) {
-            if (number % i === 0) count++;
+            if (!(number % i)) count++;
         }
         return count;
     }

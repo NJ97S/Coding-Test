@@ -12,7 +12,7 @@ function solution(numbers, target) {
     }
 
     for (let node of parentNodes) {
-        if (node === target) count++
+        if (node === target) count++;
     }
     
     return count;

@@ -5,7 +5,7 @@ function solution(numbers, target) {
 
     for (let number of numbers) {
         let temp = [];  // 중간 합 임시로 저장할 배열
-        for (let node of parentNodes) { // 부모 정점에 현재 정점 값 더하거나 빼서 
+        for (let node of parentNodes) {
             temp.push(node + number, node - number);
         }
         parentNodes = temp;

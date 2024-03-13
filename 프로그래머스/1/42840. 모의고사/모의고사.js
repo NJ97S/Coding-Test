@@ -5,18 +5,14 @@ function solution(answers) {
     
     for (let i = 0; i < answers.length; i++) {
         for (let j = 0; j < 3; j++) {
-            if (answers[i] === GG[j][i % GG[j].length]) {
-                points[j] ++
-            }
+            if (answers[i] === GG[j][i % GG[j].length]) points[j] ++
         }
     }
     
     let answer = [];
     for (let i = 0; i < points.length; i++) {
-        if (points[i] === Math.max(points[0], points[1], points[2])) {
-            answer.push(i + 1)
-        }
+        if (points[i] === Math.max(points[0], points[1], points[2])) answer.push(i + 1)
     }
+    
     return answer
-
 }

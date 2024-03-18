@@ -10,7 +10,6 @@ const [[N], REQUEST, [BUDGET]] = input;
 if (sumRequestBudget(REQUEST) <= BUDGET) console.log(Math.max(...REQUEST));
 else console.log(binarySearch(REQUEST, BUDGET, 0, Math.max(...REQUEST)));
 
-// 요청 예산 합
 function sumRequestBudget(request) {
   const sum = request.reduce((acc, elem) => {
     return acc + elem;
@@ -19,7 +18,6 @@ function sumRequestBudget(request) {
   return sum;
 }
 
-// 예산 값 최대: 이분탐색
 function binarySearch(list, target, left, right) {
   let answerCandidates = [];
 

@@ -3,11 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-/*
-- "(" => stack에 넣기
-- "|" 또는 ")" => stack top이 "|" 또는 "(" 라면 => 공 갯수 +1
-*/
-
 public class Solution {
 	
 	static BufferedReader br;

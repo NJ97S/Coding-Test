@@ -1,43 +1,56 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Solution {
-
-	public static void main(String[] args) {
+	
+	static BufferedReader br;
+	static StringBuilder sb;
+	
+	static int[] originalNum; // 만들어야 하는 숫자
+	static int[] currentNum; // 현재 숫자
+	
+	static int answer; // 최소 수정 횟수
+	
+	public static void main(String[] args) throws IOException {
 		
-		Scanner sc = new Scanner(System.in);
+		br = new BufferedReader(new InputStreamReader(System.in));
+		sb = new StringBuilder();
 		
-		final int T = sc.nextInt();
+		final int T = Integer.parseInt(br.readLine());
 		
 		for (int testCase = 1; testCase <= T; testCase++) {
-			final String INPUT = sc.next();
+			sb.append("#").append(testCase).append(" ");
 			
-			String[] inputArr = INPUT.split("");
+			String[] input = br.readLine().split("");
 			
-			String[] startNum = new String[INPUT.length()];
-			for (int i = 0; i < startNum.length; i++) {
-				startNum[i] = "0";
+			originalNum = new int[input.length];
+			for (int i = 0; i < input.length; i++) {
+				originalNum[i] = Integer.parseInt(input[i]);
 			}
 			
-			int answer = 0;
+			currentNum = new int[originalNum.length];
 			
-			for (int i = 0; i < startNum.length; i++) {				
-				if (!inputArr[i].equals(startNum[i])) {
+			answer = 0;
+			
+			for (int i = 0; i < originalNum.length; i++) {
+				if (currentNum[i] != originalNum[i]) {
+					changeNum(i);
 					answer++;
-					
-					if (startNum[i].equals("0")) {
-						for (int j = i; j < startNum.length; j++) startNum[j] = "1";
-					} else {
-						for (int j = i; j < startNum.length; j++) startNum[j] = "0";
-					}
 				}
 			}
 			
-			System.out.printf("#%d %d\n", testCase, answer);
+			sb.append(answer).append("\n");
 		}
 		
-		sc.close();
-
+		System.out.println(sb.toString());
+		
 	}
-
+	
+	static void changeNum(int startIdx) {
+		 for (int i = startIdx; i < currentNum.length; i++) {
+			 currentNum[i] = (currentNum[i] + 1) % 2;
+		 }
+	}
+	
 }

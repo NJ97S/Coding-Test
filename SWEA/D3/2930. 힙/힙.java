@@ -4,92 +4,95 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+- 한 줄에 입력받는 요소의 수가 2개 -> 연산 1: 최대힙에 요소 추가
+- 한 줄에 입력받는 요소의 수가 1개 -> 연산 2: 루트 노드 키 값 출력 후, 해당 노드 삭제
+*/
+
 public class Solution {
 	
 	static BufferedReader br;
 	static StringBuilder sb;
 	
-	static int N;
+	static int N; //수행해야 하는 연산의 수
 	
-	static List<Integer> tree;
+	static List<Integer> maxHeap;
 	
 	public static void main(String[] args) throws IOException {
 		
 		br = new BufferedReader(new InputStreamReader(System.in));
+		sb = new StringBuilder();
 		
-		int T = Integer.valueOf(br.readLine());
+		final int T = Integer.parseInt(br.readLine()); // 테스트 케이스의 수
 		
-		for (int testCase = 1; testCase <= T; testCase++) {		
-			sb = new StringBuilder();
+		for (int testCase = 1; testCase <= T; testCase++) {
+			sb.append("#").append(testCase);
 			
-			N = Integer.valueOf(br.readLine()); // 연산의 수
+			maxHeap = new ArrayList<>();
+			maxHeap.add(null);
 			
-			tree = new ArrayList<>();
-			tree.add(null); // 0번 인덱스 만들기
+			N = Integer.parseInt(br.readLine());
 			
-			// 1차원 배열로 트리 만들기
-			for (int i = 1; i <= N; i++) {
+			for (int i = 0; i < N; i++) { // N번만큼 반복
 				String[] input = br.readLine().split(" ");
 				
+				// 연산 1: 최대힙에 요소 추가
 				if (input.length == 2) {
-					int value = Integer.valueOf(input[1]);
+					maxHeap.add(Integer.parseInt(input[1]));
 					
-					tree.add(value);
-					
-					shiftUp(tree.size() - 1, value);
+					shiftUp(maxHeap.size() - 1);
 				}
 				
+				// 연산 2: 루트 노드 키 값 출력 후, 해당 노드 삭제
 				else {
-					if (tree.size() == 1) sb.append(-1 + " ");
+					if (maxHeap.size() == 1) sb.append(" ").append(-1); // 힙이 비어있을 경우, -1 출력
 					
 					else {
-						sb.append(tree.get(1) + " "); // 최댓값 출력
+						sb.append(" ").append(maxHeap.get(1));
 						
-						tree.set(1, tree.get(tree.size() - 1)); // 마지막 요소 -> 첫 번째 요소
-						tree.remove(tree.size() - 1); // 마지막 요소 삭제
+						maxHeap.set(1, maxHeap.get(maxHeap.size() - 1));
+						maxHeap.remove(maxHeap.size() - 1);
 						
-						if (tree.size() == 1) continue;
-						
-						shiftDown(1, tree.get(1));
-					}
+						shiftDown(1);						
+					} 
 				}
 			}
 			
-			System.out.printf("#%d %s\n", testCase, sb.toString().trim());
+			sb.append("\n");
 		}
+		
+		System.out.println(sb.toString());
 		
 	}
 	
-	static void shiftUp(int idx, int value) {
-		if (tree.size() == 2) return;
+	static void shiftUp(int leaf) {
+		if (maxHeap.size() <= 1) return;
 		
-		// value > 부모노드 값 => swap
-		while (idx >= 2 && tree.get(idx) > tree.get(idx / 2)) {
-			int temp = tree.get(idx);
-			tree.set(idx, tree.get(idx / 2));
-			tree.set(idx / 2, temp);
+		if (leaf < 2) return;
+		
+		if (maxHeap.get(leaf) > maxHeap.get(leaf / 2)) {
+			int temp = maxHeap.get(leaf);
+			maxHeap.set(leaf, maxHeap.get(leaf / 2));
+			maxHeap.set(leaf / 2, temp);
 			
-			idx = idx / 2;
+			shiftUp(leaf / 2);
 		}
 	}
 	
-	static void shiftDown(int idx, int value) {
-		if (tree.size() == 2) return;
+	static void shiftDown(int root) {
+		if (maxHeap.size() <= 1) return;
 		
-		// 왼쪽 자식 노드와 오른쪽 자식 노드 중 더 큰 값으로 설정
-		int childIdx = idx * 2;
-		if (childIdx + 1 < tree.size() && tree.get(childIdx + 1) > tree.get(childIdx)) childIdx++;
+		if (root >= maxHeap.size() / 2) return;
 		
-		// value < 자식노드 값 => swap
-		while (childIdx < tree.size() && tree.get(idx) < tree.get(childIdx)) {
-			int temp = tree.get(idx);
-			tree.set(idx, tree.get(childIdx));
-			tree.set(childIdx, temp);
+		int child = root * 2;
+		if (root * 2 + 1 <= maxHeap.size() && maxHeap.get(root * 2 + 1) > maxHeap.get(child)) child++;
+		
+		if (maxHeap.get(child) > maxHeap.get(root)) {
+			int temp = maxHeap.get(child);
+			maxHeap.set(child, maxHeap.get(root));
+			maxHeap.set(root, temp);
 			
-			idx = childIdx;
-			childIdx *= 2;
-			
-			if (childIdx + 1 < tree.size() && tree.get(childIdx + 1) > tree.get(childIdx)) childIdx++;
+			shiftDown(child);
 		}
 	}
 	

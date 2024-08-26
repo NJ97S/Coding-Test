@@ -43,11 +43,8 @@ public class Solution {
 				}
 				
 				M /= 2;
-			}
-			
-			if (M == 0 && repeat < N) {
-				sb.append("OFF").append("\n");
-				continue;
+				
+				if (M == 0 && repeat < N) answer = "OFF";
 			}
 			
 			sb.append(answer).append("\n");

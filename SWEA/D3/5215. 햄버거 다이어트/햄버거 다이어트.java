@@ -2,11 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/*
-- 칼로리 이하의 조합 중 -> 민기가 가장 선호하는 햄버거 조합
-- 단순 조합 (중복 X)
-*/
-
 public class Solution {
 	
 	static BufferedReader br;
@@ -15,10 +10,11 @@ public class Solution {
 	static int N; // 재료의 수 (1 <= N <= 20)
 	static int L; // 제한 칼로리 (1 <= L <= 10^4)
 	
-	static int[] SCORES; // 재료에 대한 점수 (1 <= score <= 10^3)
-	static int[] CALORIES; // 재료에 대한 칼로리 (1 <= calorie <= 10^3)
+	static int[] SCORES; // 재료 점수
+	static int[] CALORIES; // 재료 칼로리
+	static boolean[] selected; // 사용한 재료
 	
-	static int answer; // 주어진 제한 칼로리 이하의 조합 중 가장 높은 햄버거 점수
+	static int answer; // 가장 높은 햄버거 점수
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -44,30 +40,42 @@ public class Solution {
 				CALORIES[i] = Integer.parseInt(input[1]);
 			}
 			
-			answer = 0;
+			selected = new boolean[N];
 			
-			loop:
-			for (int i = 1; i < (1 << N); i++) {
-				int tempScore = 0;
-				int tempCalorie = 0;
-				
-				for (int j = 0; j < N; j++) {
-					if ((i & (1 << j)) != 0) {
-						tempScore += SCORES[j];
-						tempCalorie += CALORIES[j];
-						
-						if (tempCalorie > L) continue loop;
-					}
-				}
-				
-				answer = Math.max(answer, tempScore);
-			}
+			answer = 0;
+			powerset(0);
 			
 			sb.append(answer).append("\n");
 		}
 		
 		System.out.println(sb);
 		
+	}
+	
+	static void powerset(int idx) {
+		if (idx >= N) {
+			int score = 0;
+			int calorie = 0;
+			
+			for (int i = 0; i < N; i++) {
+				if (selected[i]) {
+					score += SCORES[i];
+					calorie += CALORIES[i];
+				}
+				
+				if (calorie > L) return;
+			}
+			
+			answer = Math.max(answer, score);
+			
+			return;
+		}
+		
+		selected[idx] = true;
+		powerset(idx + 1);
+		
+		selected[idx] = false;
+		powerset(idx + 1);
 	}
 	
 }

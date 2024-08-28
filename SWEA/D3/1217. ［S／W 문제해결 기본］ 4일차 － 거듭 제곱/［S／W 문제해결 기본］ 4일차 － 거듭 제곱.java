@@ -1,30 +1,34 @@
 import java.util.Scanner;
 
 public class Solution {
-
+	
+	static Scanner sc;
+	
+	static int N; // 밑
+	static int M; // 지수
+	
 	public static void main(String[] args) {
 		
-		Scanner sc = new Scanner(System.in);
-
-		for (int testCase = 1; testCase <= 10; testCase++) {
+		sc = new Scanner(System.in);
+		
+		for (int testCase = 1; testCase <= 10; testCase++) {			
 			sc.nextInt();
 			
-			final int N = sc.nextInt();
-			final int M = sc.nextInt();
+			N = sc.nextInt();
+			M = sc.nextInt();
 			
-			int answer = multiply(N, M);
-			
-			System.out.printf("#%d %d\n", testCase, answer);
+			System.out.printf("#%d %d\n", testCase, pow(N, M));
 		}
-		
-		sc.close();
 		
 	}
 	
-	static int multiply(int N, int M) {		
-		if (M == 0) return 1;
+	static int pow(int N, int M) {
+		if (M <= 1) return N;
 		
-		return N * multiply(N, M - 1);
+		int temp = pow(N, M / 2);
+		
+		if (M % 2 == 0) return temp * temp;
+		else return temp * temp * N;
 	}
-
+	
 }

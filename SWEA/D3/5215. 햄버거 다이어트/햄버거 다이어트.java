@@ -7,43 +7,40 @@ public class Solution {
 	static BufferedReader br;
 	static StringBuilder sb;
 	
-	static int N; // 재료의 수 (1 <= N <= 20)
-	static int L; // 제한 칼로리 (1 <= L <= 10^4)
+	static int N; // 재료의 개수
+	static int L; // 제한 칼로리
 	
-	static int[] SCORES; // 재료 점수
-	static int[] CALORIES; // 재료 칼로리
-	static boolean[] selected; // 사용한 재료
+	static int[] scores;
+	static int[] cals;
 	
-	static int answer; // 가장 높은 햄버거 점수
+	static int answer;
 	
 	public static void main(String[] args) throws IOException {
 		
 		br = new BufferedReader(new InputStreamReader(System.in));
 		sb = new StringBuilder();
 		
-		final int T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(br.readLine());
 		
 		for (int testCase = 1; testCase <= T; testCase++) {
-			sb.append("#").append(testCase).append(" ");
+			sb.append("#").append(testCase).append(" ");  
 			
 			String[] input = br.readLine().split(" ");
 			N = Integer.parseInt(input[0]);
 			L = Integer.parseInt(input[1]);
 			
-			SCORES = new int[N];
-			CALORIES = new int[N];
+			scores = new int[N];
+			cals = new int[N];
 			
 			for (int i = 0; i < N; i++) {
 				input = br.readLine().split(" ");
 				
-				SCORES[i] = Integer.parseInt(input[0]);
-				CALORIES[i] = Integer.parseInt(input[1]);
+				scores[i] = Integer.parseInt(input[0]);
+				cals[i] = Integer.parseInt(input[1]);
 			}
 			
-			selected = new boolean[N];
-			
 			answer = 0;
-			powerset(0);
+			makeBurger(0, 0, 0);
 			
 			sb.append(answer).append("\n");
 		}
@@ -52,30 +49,16 @@ public class Solution {
 		
 	}
 	
-	static void powerset(int idx) {
+	static void makeBurger(int idx, int sumScore, int sumCal) {
+		if (sumCal > L) return;
+		
 		if (idx >= N) {
-			int score = 0;
-			int calorie = 0;
-			
-			for (int i = 0; i < N; i++) {
-				if (selected[i]) {
-					score += SCORES[i];
-					calorie += CALORIES[i];
-				}
-				
-				if (calorie > L) return;
-			}
-			
-			answer = Math.max(answer, score);
-			
+			answer = Math.max(answer, sumScore);
 			return;
 		}
 		
-		selected[idx] = true;
-		powerset(idx + 1);
-		
-		selected[idx] = false;
-		powerset(idx + 1);
+		makeBurger(idx + 1, sumScore + scores[idx], sumCal + cals[idx]);
+		makeBurger(idx + 1, sumScore, sumCal);
 	}
 	
 }

@@ -114,13 +114,8 @@ public class Solution {
 				time.set(i, time.get(i) - 1);
 			}
 			
-			for (int i = 0; i < time.size(); i++) {			
-				if (time.get(i) <= 0) {
-					time.remove(i);
-					i--;
-				} else {
-					break;
-				}
+			while (!time.isEmpty() && time.get(0) <= 0) {
+				time.remove(0);
 			}
 		}
 		

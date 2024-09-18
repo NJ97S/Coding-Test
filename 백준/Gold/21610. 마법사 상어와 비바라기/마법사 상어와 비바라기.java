@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 /*
 [문제 링크]
@@ -27,11 +26,6 @@ import java.util.Arrays;
      - 단, 3에서 구름이 사라진 칸은 제외
  
  - M번의 이동이 끝난 후, 바구니에 들어있는 물의 총합 출력
-*/
-
-/*
-[풀이 방식]
-- 
 */
 
 public class Main {
@@ -112,21 +106,6 @@ public class Main {
 		}
 		
 		hasCloud = nextCloud;
-		
-	}
-	
-	static void rainAndWaterCopy () {
-		
-		for (int r = 0; r < N; r++) {
-			for (int c = 0; c < N; c++) {
-				
-				if (!hasCloud[r][c]) continue;
-				
-				MAP[r][c]++;
-				
-				MAP[r][c] += getCountDiagonalCloud(r, c);
-			}
-		}
 		
 	}
 	

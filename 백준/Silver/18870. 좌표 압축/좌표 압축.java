@@ -23,7 +23,7 @@ import java.util.TreeSet;
 [풀이 방식]
 - 좌표 배열 복사본을 만들어서 정렬
   - treeSet으로 중복 제거 및 정렬 후, 배열로 변환
-- 원본 좌표 배열을 돌면서, 복사본을 이용하여 이분 탐색으로 작은 값 개수 찾기 => O(NlogN)
+- 원본 좌표 배열을 돌면서, 복사본을 이용하여 이분 탐색으로 작은 값 개수 찾기
 */
 
 public class Main {
@@ -81,8 +81,7 @@ public class Main {
 			if (copy[mid] < target) {
 				left = mid + 1;
 				
-				if (result >= 0 && copy[mid] == copy[result]) result = Math.min(result, mid);
-				else result = Math.max(result, mid);
+				result = Math.max(result, mid);
 			} else {
 				right = mid - 1;
 			}

@@ -27,7 +27,6 @@ public class Main {
 	static int K; // 만들어야 하는 합 (1 <= K <= 10,000)
 	
 	static int[] VALUES; // 동전의 가치 (1 <= 가치 <= 100,000)
-	static int MAX_VALUE;
 	
 	static int[] dp; // 특정 가치를 만드는 동전의 수
 	
@@ -43,11 +42,7 @@ public class Main {
 		VALUES = new int[N];
 		
 		for (int i = 0; i < N; i++) {
-			int value = Integer.parseInt(br.readLine());
-			
-			VALUES[i] = value;
-			
-			MAX_VALUE = Math.max(MAX_VALUE, value);
+			VALUES[i] = Integer.parseInt(br.readLine());
 		}
 		
 		// ----------------------- input -----------------------

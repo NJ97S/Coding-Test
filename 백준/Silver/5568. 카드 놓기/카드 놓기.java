@@ -8,14 +8,11 @@ import java.util.Set;
 public class Main {
 	
 	static BufferedReader br;
-	static StringBuilder sb;
 	
 	static int N; // 카드의 개수 (4 <= N <= 10)
 	static int K; // 선택할 카드의 개수 (2 <= K <= 4)
 	
 	static int[] CARDS;
-	
-	static int[] selectedCards;
 	
 	static Set<String> numbers; // 만들어진 숫자
 	
@@ -34,25 +31,21 @@ public class Main {
 		
 		// --------------------- input ---------------------
 		
-		Arrays.sort(CARDS);
-		
-		selectedCards = new int[K];
 		numbers = new HashSet<>();
 		
-		makeNumber(0, 0);
+		String number = "";
+		
+		makeNumber(0, 0, number);
 		
 		System.out.println(numbers.size());
 		
 	}
 	
-	
-	// idx: selectedCards 배열의 인덱스
-	// count: 선택한 카드의 수
-	static void makeNumber(int idx, int visited) {
+	static void makeNumber(int visited, int count, String number) {
 		
 		// 기저 조건
-		if (idx == K) {		
-			convertNum();
+		if (count == K) {			
+			numbers.add(number);
 			
 			return;
 		}
@@ -66,22 +59,9 @@ public class Main {
 			
 			prev = CARDS[i];
 			
-			selectedCards[idx] = CARDS[i];
-			makeNumber(idx + 1, visited | 1 << i);
+			makeNumber(visited | 1 << i, count + 1, number + CARDS[i]);
 			
 		}
-		
-	}
-	
-	static void convertNum() {
-		
-		sb = new StringBuilder();
-		
-		for (int elem: selectedCards) {
-			sb.append(elem);
-		}
-		
-		numbers.add(sb.toString());
 		
 	}
 	

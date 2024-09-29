@@ -8,19 +8,19 @@ public class Solution {
 	static BufferedReader br;
 	static StringBuilder sb;
 	
-	static int N = 16; // 미로의 가로, 세로 길이
+	static int N = 16; // 미로의 크기
 	
 	static int[][] MAZE;
 	
-	static int[] START; // 출발점의 좌표
-	static int[] END; // 끝점의 좌표
+	static int[] START;
+	static int[] END;
+	
+	static int[] dr = {-1, 0, 1, 0}; // 북, 동, 남, 서
+	static int[] dc = {0, 1, 0, -1};
 	
 	static boolean[][] visited;
 	
-	static int[] dr = {-1, 0, 1, 0}; // 북 동 남 서
-	static int[] dc = {0, 1, 0, -1};
-	
-	static int answer; // 도달 가능 여부
+	static int isAble;
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -28,9 +28,10 @@ public class Solution {
 		sb = new StringBuilder();
 		
 		for (int testCase = 1; testCase <= 10; testCase++) {
-			sb.append("#").append(br.readLine()).append(" ");
+			sb.append("#").append(Integer.parseInt(br.readLine())).append(" ");
 			
 			MAZE = new int[N][N];
+			
 			for (int i = 0; i < N; i++) {
 				String[] input = br.readLine().split("");
 				
@@ -44,42 +45,41 @@ public class Solution {
 				}
 			}
 			
-			answer = 0;
+			// --------------------------- input ---------------------------
 			
-			visited = new boolean[N][N];		
+			isAble = 0;
 			
-			dfs(START[0], START[1]);
+			visited = new boolean[N][N];
+			dfs();
 			
-			sb.append(answer).append("\n");
+			sb.append(isAble).append("\n");
+			
 		}
 		
 		System.out.println(sb);
 		
 	}
 	
-	static void dfs(int r, int c) {
+	static void dfs() {
 		
 		Stack<int[]> stack = new Stack<>();
 		
-		stack.push(new int[] {r, c});
-		visited[r][c] = true;
+		stack.add(new int[] {START[0], START[1]});
+		visited[START[0]][START[1]] = true;
 		
 		while (!stack.isEmpty()) {
 			
-			int[] cur = stack.pop();
+			int[] curr = stack.pop();
 			
 			for (int k = 0; k < 4; k++) {
-				int nr = cur[0] + dr[k];
-				int nc = cur[1] + dc[k];
+				int nr = curr[0] + dr[k];
+				int nc = curr[1] + dc[k];
 				
 				if (nr < 0 || nr >= N || nc < 0 || nc >= N || visited[nr][nc] || MAZE[nr][nc] == 1) continue;
 				
-				if (MAZE[nr][nc] == 3) {
-					answer = 1;
-					return;
-				}
+				if (MAZE[nr][nc] == 3) isAble = 1;
 				
-				stack.push(new int[] {nr, nc});
+				stack.add(new int[] {nr, nc});
 				visited[nr][nc] = true;
 			}
 			

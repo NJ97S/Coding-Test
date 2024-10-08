@@ -24,7 +24,7 @@ import java.io.InputStreamReader;
 
 2. 유사회문 판단
    - 0번 인덱스 값을 left, 마지막 인덱스 값을 right로 놓고, left와 right가 같은 지를 확인
-   - 같지 않다면, right = right - 1
+   - 같지 않다면, right = right - 1 또는 left = left + 1
    - left <= right 조건일 때 반복 수행
 */
 
@@ -34,6 +34,8 @@ public class Main {
 	static StringBuilder sb;
 	
 	static String INPUT;
+	
+	static int countOfNormal; // 회문이 아닌 문자 개수
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -45,44 +47,36 @@ public class Main {
 		for (int testCase = 1; testCase <= T; testCase++) {
 			INPUT = br.readLine();
 			
-			int left = 0;
-			int right = INPUT.length() - 1;
+			countOfNormal = 100000;
 			
-			int count1 = 0;
+			isPalindrome(0, INPUT.length() - 1, 0);
 			
-			while (left <= right) {
-				if (INPUT.charAt(left) == INPUT.charAt(right)) {
-					left++;
-					right--;
-				} else {
-					left++;
-					count1++;
-				}
-			}
-			
-			int count2 = 0;
-			
-			left = 0;
-			right = INPUT.length() - 1;
-			
-			while (left <= right) {
-				if (INPUT.charAt(left) == INPUT.charAt(right)) {
-					left++;
-					right--;
-				} else {
-					right--;
-					count2++;
-				}
-			}
-			
-			int count = Math.min(count1, count2);
-			
-			if (count == 0) sb.append(0).append("\n");
-			else if (count == 1) sb.append(1).append("\n");
+			if (countOfNormal == 0) sb.append(0).append("\n");
+			else if (countOfNormal == 1) sb.append(1).append("\n");
 			else sb.append(2).append("\n");
 		}
 		
 		System.out.println(sb);
+		
+	}
+	
+	static void isPalindrome(int left, int right, int count) {
+		
+		// 기저 조건
+		if (left > right) {
+			countOfNormal = Math.min(countOfNormal, count);  
+			
+			return;
+		}
+		
+		if (count > 1) return;
+		
+		// 재귀 부분
+		if (INPUT.charAt(left) == INPUT.charAt(right)) isPalindrome(left + 1, right - 1, count);
+		else {
+			isPalindrome(left + 1, right, count + 1);
+			isPalindrome(left, right - 1, count + 1);
+		}
 		
 	}
 	

@@ -45,64 +45,44 @@ public class Main {
 		for (int testCase = 1; testCase <= T; testCase++) {
 			INPUT = br.readLine();
 			
-			if (isPalindrome()) sb.append(0).append("\n");
-			else if (isPseudoPalindrome()) sb.append(1).append("\n");
+			int left = 0;
+			int right = INPUT.length() - 1;
+			
+			int count1 = 0;
+			
+			while (left <= right) {
+				if (INPUT.charAt(left) == INPUT.charAt(right)) {
+					left++;
+					right--;
+				} else {
+					left++;
+					count1++;
+				}
+			}
+			
+			int count2 = 0;
+			
+			left = 0;
+			right = INPUT.length() - 1;
+			
+			while (left <= right) {
+				if (INPUT.charAt(left) == INPUT.charAt(right)) {
+					left++;
+					right--;
+				} else {
+					right--;
+					count2++;
+				}
+			}
+			
+			int count = Math.min(count1, count2);
+			
+			if (count == 0) sb.append(0).append("\n");
+			else if (count == 1) sb.append(1).append("\n");
 			else sb.append(2).append("\n");
 		}
 		
 		System.out.println(sb);
-		
-	}
-	
-	static boolean isPalindrome() {
-		
-		for (int i = 0; i < INPUT.length() / 2; i++) {
-			if (INPUT.charAt(i) != INPUT.charAt(INPUT.length() - 1 - i)) return false;
-		}
-		
-		return true;
-		
-	}
-	
-	static boolean isPseudoPalindrome() {
-		
-		// 양쪽 끝 문자가 같지 않을 때, 오른쪽 문자를 제외하고 검사하는 경우
-		int count1 = 0; // 회문이 아닌 글자가 몇 개 있는 지
-		
-		int left = 0;
-		int right = INPUT.length() - 1;
-		
-		while (left <= right) {
-			
-			if (INPUT.charAt(left) == INPUT.charAt(right)) {
-				left++;
-				right--;
-			} else {
-				right--;
-				count1++;
-			}
-			
-		}
-		
-		// 양쪽 끝 문자가 같지 않을 때, 왼쪽 문자를 제외하고 검사하는 경우
-		int count2 = 0;
-		
-		left = 0;
-		right = INPUT.length() - 1;
-		
-		while (left <= right) {
-			
-			if (INPUT.charAt(left) == INPUT.charAt(right)) {
-				left++;
-				right--;
-			} else {
-				left++;
-				count2++;
-			}
-			
-		}
-		
-		return Math.min(count1, count2) > 1 ? false : true;
 		
 	}
 	

@@ -60,11 +60,9 @@ public class Main {
 		for (int house = 1; house < N; house++) {
 			int[] temp = new int[3];
 			
-			for (int color = 0; color < 3; color++) {
-				
-				temp[color] = PRICES[house][color] + findCheaperPrice(color);
-				
-			}
+			temp[0] = PRICES[house][0] + Math.min(minPrice[1], minPrice[2]);
+			temp[1] = PRICES[house][1] + Math.min(minPrice[0], minPrice[2]);
+			temp[2] = PRICES[house][2] + Math.min(minPrice[0], minPrice[1]);
 			
 			minPrice = temp;
 		}
@@ -74,22 +72,6 @@ public class Main {
 		}
 		
 		System.out.println(answer);
-		
-	}
-	
-	static int findCheaperPrice(int color) {
-		
-		int result = Integer.MAX_VALUE;
-		
-		for (int i = 0; i < 3; i++) {
-			
-			if (color == i) continue;
-			
-			result = Math.min(result, minPrice[i]);
-			
-		}
-		
-		return result;
 		
 	}
 	

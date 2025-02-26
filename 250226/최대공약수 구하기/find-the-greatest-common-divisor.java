@@ -19,13 +19,17 @@ public class Main {
         // --------------------- input ---------------------
 
         int maxNum = Math.max(N, M);
+        int minNum = Math.min(N, M);
 
-        for (int i = maxNum; i > 0; i--) {
-            if (N % i != 0 || M % i != 0) continue;
+        System.out.println(gcd(maxNum, minNum));
 
-            System.out.println(i);
-            break;
-        }
+    }
+
+    static int gcd (int a, int b) {
+
+        if (b == 0) return a;
+
+        return gcd(b, a % b);
 
     }
 

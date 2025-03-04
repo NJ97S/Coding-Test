@@ -32,9 +32,11 @@ public class Main {
     // 숫자에 3, 6, 9 중 하나라도 포함되어 있는 지에 대한 유무 판단
     static boolean isTrue (int num) {
 
-        String numToString = String.valueOf(num);
+        if (num == 0) return false;
 
-        return numToString.contains("3") || numToString.contains("6") || numToString.contains("9");
+        if (num % 10 == 3 || num % 10 == 6 || num % 10 == 9) return true;
+
+        return isTrue(num / 10);
 
     }
 

@@ -71,31 +71,22 @@ class Solution {
         Trie[] topTrieArr = new Trie[10001];
         Trie[] downTrieArr = new Trie[10001];
         
+        for (int i = 1; i <= 10000; i++) {
+            topTrieArr[i] = new Trie();
+            downTrieArr[i] = new Trie();
+        }
+        
         for (String word: words) {
             // topTrie insert
-            Trie topTrie = topTrieArr[word.length()];
-            
-            if (topTrieArr[word.length()] == null) {
-                topTrie = new Trie();
-                topTrieArr[word.length()] = topTrie;
-            }
-            
-            topTrie.insert(word);
+            topTrieArr[word.length()].insert(word);
             
             // downTrie insert
-            Trie downTrie = downTrieArr[word.length()];
-            
-            if (downTrie == null) {
-                downTrie = new Trie();
-                downTrieArr[word.length()] = downTrie;
-            }
-            
             String temp = "";
             for (int i = word.length() - 1; i >= 0; i--) {
                 temp += word.charAt(i);
             }
             
-            downTrie.insert(temp);
+            downTrieArr[word.length()].insert(temp);
         }
         
         for (String query: queries) {

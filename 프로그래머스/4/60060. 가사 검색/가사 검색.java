@@ -49,8 +49,6 @@ class Solution {
             
             TrieNode node = root;
             
-            if (word == "") return node.count;
-            
             for (char c: word.toCharArray()) {
                 int idx = c - 'a';
                 
@@ -70,8 +68,8 @@ class Solution {
         int[] answer = new int[queries.length];
         int idx = 0;
         
-        Trie[] topTrieArr = new Trie[100001];
-        Trie[] downTrieArr = new Trie[100001];
+        Trie[] topTrieArr = new Trie[10001];
+        Trie[] downTrieArr = new Trie[10001];
         
         for (String word: words) {
             // topTrie insert
